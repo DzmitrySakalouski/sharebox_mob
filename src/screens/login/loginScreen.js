@@ -38,7 +38,7 @@ export const LoginScreen = (props) => {
 
     const logIn = () => {
         firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
-            Alert('hello')
+            console.log('hello');
         })
     }
 

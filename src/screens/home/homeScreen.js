@@ -1,10 +1,19 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+// import React from 'react';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import { AllTracksScreen } from '../allTracks/allTracks';
+import { TrackScreen } from '../trackScreen/trackScreen';
 
-export const HomeScreen = (props) => {
-    return (
-        <View>
-            <Text>HomeScreen</Text>
-        </View>
-    );
-}
+const AppNavigator = createStackNavigator({
+    AllTracks: {
+        screen: AllTracksScreen
+    },
+    Track: {
+        screen: TrackScreen
+    }
+},
+{
+    initialRouteName: 'Track',
+});
+
+export const HomeScreen = createAppContainer(AppNavigator);

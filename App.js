@@ -15,7 +15,7 @@ const App = () => {
 
   React.useEffect(() => {
     firebase.auth().onAuthStateChanged(authUser => {
-      setUser(user);
+      setUser(authUser);
     })
   }, []);
 
