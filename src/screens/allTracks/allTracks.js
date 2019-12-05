@@ -1,10 +1,27 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Button } from 'react-native';
 
-export const AllTracksScreen = (props) => {
-    return (
-        <View>
-            <Text>All TRACKS</Text>
-        </View>
-    );
+export class AllTracksScreen extends React.Component {
+    static navigationOptions = {
+        headerTitle: () => (
+            <View>
+                <Text>All TRACKS</Text>
+            </View>
+        ),
+        headerRight: () => (
+            <Button
+                onPress={() => alert('This is a button!')}
+                title="Info"
+                // color="black"
+            />
+        ),
+    };
+    render() {
+        return (
+            <View>
+                <Text>All TRACKS</Text>
+            </View>
+        );
+    }
 }
+

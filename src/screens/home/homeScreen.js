@@ -1,4 +1,5 @@
-// import React from 'react';
+import React from 'react';
+import { Text } from 'react-native-elements';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { AllTracksScreen } from '../allTracks/allTracks';
@@ -13,7 +14,8 @@ const AppNavigator = createStackNavigator({
     }
 },
 {
-    initialRouteName: 'Track',
+    initialRouteName: 'AllTracks',
+    headerTitle: () => (<Text style={{ color: 'black' }}>Second World</Text>)
 });
 
 export const HomeScreen = createAppContainer(AppNavigator);
