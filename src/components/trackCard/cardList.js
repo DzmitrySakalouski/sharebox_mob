@@ -54,7 +54,7 @@ export const TrackList = props => {
     return (
         <ScrollView>
             {
-                tracks.map(item => {
+                props.tracks.map(item => {
                     return (
                         <TrackCard key={item.id} track={item} />
                     )
