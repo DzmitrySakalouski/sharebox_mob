@@ -4,6 +4,7 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { AllTracksScreen } from '../allTracks/allTracks';
 import { TrackScreen } from '../trackScreen/trackScreen';
+import { Logo, HeaderMenu } from '../../components/headerItems';
 
 const AppNavigator = createStackNavigator({
     AllTracks: {
@@ -15,7 +16,8 @@ const AppNavigator = createStackNavigator({
 },
 {
     initialRouteName: 'AllTracks',
-    headerTitle: () => (<Text style={{ color: 'black' }}>Second World</Text>)
+    headerTitle: () => <Logo />,
+    headerRight: () => <HeaderMenu />,
 });
 
 export const HomeScreen = createAppContainer(AppNavigator);

@@ -8,4 +8,4 @@ const reducer = combineReducers({
     nav: navigationReducer
 });
 
-export const store = createStore(reducer, applyMiddleware(thunk, logger))
+export const store = createStore(reducer, applyMiddleware(logger, thunk));
