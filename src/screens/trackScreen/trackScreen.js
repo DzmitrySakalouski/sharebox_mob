@@ -80,7 +80,7 @@ export class TrackScreenComponent extends React.PureComponent {
                     selectedIndex={selectedIndex}
                     buttons={buttons}
                     selectedButtonStyle={styles.selectedBtn}
-                    containerStyle={{ height: 50, width: '100%' }}
+                    containerStyle={{ height: 50 }}
                 />
                 <ScrollView>
                     <MediaList items={this.state.items}/>

@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Text, StyleSheet } from 'react-native';
 import { Button, Divider } from 'react-native-elements';
+import firebase from 'react-native-firebase';
 
 const styles = StyleSheet.create({
     container: {
@@ -22,9 +23,22 @@ const styles = StyleSheet.create({
 
 export const MediaItem = props => {
     const { name, ref } = props.item;
+    const [blob, setBlob] = useState('')
 
     const handleDownloadFile = () => {
-        alert(ref);
+        const storage = firebase.storage();
+        storage.child(ref).getDownloadURL().then(url => {
+            var xhr = new XMLHttpRequest();
+            xhr.responseType = 'blob';
+            xhr.onload = function (event) {
+                var blob = xhr.response;
+                const blobUrl = URL.createObjectURL(blob);
+                setBlob(blobUrl);
+
+            };
+            xhr.open('GET', url);
+            xhr.send();
+        }).catch(err => console.log(err));
     };
 
     return (
