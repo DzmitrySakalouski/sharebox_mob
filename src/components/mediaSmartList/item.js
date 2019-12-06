@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     }
 });
 
-export const MediaItem = props => {
+export const MediaItem = props => { // todo
     const { name, ref } = props.item;
     const [blob, setBlob] = useState('')
 
