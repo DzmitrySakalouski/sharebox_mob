@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
 import { connect } from 'react-redux';
 import { setNavigation, setUser, getAllTracks } from '../../store/actions';
 import firebase from 'react-native-firebase';
 import { Logo, HeaderMenu, TrackList } from '../../components';
+import { View, ActivityIndicator } from 'react-native';
 
 export class AllTracksScreenComponent extends React.Component {
     constructor(props) {
@@ -23,11 +23,19 @@ export class AllTracksScreenComponent extends React.Component {
         headerRight: () => <HeaderMenu />,
     };
 
-    render() {
-        const {tracks} = this.props;
-
+    renderLoader = () => {
         return (
-            <TrackList tracks={tracks} />
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                <ActivityIndicator size="large" color="#3f51b5" />
+            </View>
+        );
+    }
+
+    render() {
+        const { tracks } = this.props;
+
+        return (            
+            tracks && tracks.length ? <TrackList tracks={tracks} /> : this.renderLoader()
         );
     }
 }

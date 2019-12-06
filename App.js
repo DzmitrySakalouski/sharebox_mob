@@ -21,7 +21,7 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <StatusBar barStyle="default" />
+      <StatusBar barStyle="default" backgroundColor="#3f51b5" />
       { Platform.OS === 'ios' && <View style={styles.spacer} /> }
       { user ? <HomeScreen /> : <LoginScreen /> }
     </Provider>

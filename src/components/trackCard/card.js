@@ -37,7 +37,9 @@ export const TrackCardComponent = props => {
 
     const setCurrentTrack = () => {
         props.setCurrentTrack(id);
-        props.navigation.navigate('Track')
+        props.navigation.navigate('Track', {
+            trackName: name
+        });
     }
 
     const getCreator = creator => {

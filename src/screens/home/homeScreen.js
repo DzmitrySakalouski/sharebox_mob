@@ -11,17 +11,19 @@ const AppNavigator = createStackNavigator({
 
     },
     Track: {
-        screen: TrackScreen
+        screen: TrackScreen,
     }
 },
     {
         initialRouteName: 'AllTracks',
         headerTitle: () => <Logo />,
         headerRight: () => <HeaderMenu />,
+
         defaultNavigationOptions: {
             headerStyle: {
                 backgroundColor: '#3f51b5',
             },
+            headerTintColor:  'white',
         }
     });
 
