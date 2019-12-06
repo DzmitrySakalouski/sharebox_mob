@@ -15,7 +15,7 @@ export const HeaderMenu = props => {
 
     return (
         <TouchableOpacity onPress={onIconPress}>
-            <Icon containerStyle={styles.icon} size={29} name="more-vert"/>
+            <Icon color="white" containerStyle={styles.icon} size={29} name="more-vert"/>
         </TouchableOpacity>
     )
 };

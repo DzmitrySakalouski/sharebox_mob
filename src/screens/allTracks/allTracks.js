@@ -3,7 +3,7 @@ import { View, Text, Button } from 'react-native';
 import { connect } from 'react-redux';
 import { setNavigation, setUser } from '../../store/actions';
 import firebase from 'react-native-firebase';
-import { Logo, HeaderMenu } from '../../components/headerItems';
+import { Logo, HeaderMenu, TrackList } from '../../components';
 
 export class AllTracksScreenComponent extends React.Component {
     componentDidMount() {
@@ -21,9 +21,7 @@ export class AllTracksScreenComponent extends React.Component {
 
     render() {
         return (
-            <View>
-                <Text>All TRACKS</Text>
-            </View>
+            <TrackList />
         );
     }
 }
