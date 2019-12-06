@@ -6,11 +6,12 @@ import { MediaList } from '../../components/mediaSmartList';
 import { TouchableOpacity, TouchableHighlight } from 'react-native-gesture-handler';
 
 const styles = StyleSheet.create({
-    btn: {
-        backgroundColor: '#3f51b5',
-    },
+    
     btnColor: {
-        color: 'white',
+        color: 'black',
+    },
+    selectedBtn: {
+        backgroundColor: '#3f51b5',
     },
     container: {
         flex: 1,
@@ -24,7 +25,8 @@ export class TrackScreenComponent extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            items: props.currentTrack.gtp
+            items: props.currentTrack.gtp,
+            selectedIndex: 0
         }
     }
 
@@ -40,7 +42,7 @@ export class TrackScreenComponent extends React.PureComponent {
         return {
             title: navigation.getParam('trackName', 'Track'),
             headerRight: () => (
-                <TouchableHighlight onPress={goToAddMediaForm}>
+                <TouchableHighlight onPress={this.goToAddMediaForm}>
                     <Icon color="white" size={29} containerStyle={styles.icon} name="note-add"/>
                 </TouchableHighlight>
             )
@@ -49,6 +51,7 @@ export class TrackScreenComponent extends React.PureComponent {
 
     updateIndex = selectedId => {
         const { currentTrack } = this.props;
+        this.setState({ selectedIndex: selectedId });
         console.log('jkjkjk')
         switch (selectedId) {
             case 0:
@@ -71,12 +74,13 @@ export class TrackScreenComponent extends React.PureComponent {
         return (
             <View style={styles.container}>
                 <ButtonGroup
-                    buttonStyle={styles.btn}
+                    // buttonStyle={styles.btn}
                     textStyle={styles.btnColor}
                     onPress={this.updateIndex}
                     selectedIndex={selectedIndex}
                     buttons={buttons}
-                    containerStyle={{ height: 50 }}
+                    selectedButtonStyle={styles.selectedBtn}
+                    containerStyle={{ height: 50, width: '100%' }}
                 />
                 <ScrollView>
                     <MediaList items={this.state.items}/>
