@@ -1,6 +1,8 @@
 import React from 'react';
 import { Icon } from 'react-native-elements';
 import { TouchableOpacity, StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
+import { DrawerActions } from 'react-navigation-drawer';
 
 const styles = StyleSheet.create({
     icon: {
@@ -8,9 +10,9 @@ const styles = StyleSheet.create({
     }
 });
 
-export const HeaderMenu = props => {
+const HeaderMenuComponent = props => {
     const onIconPress = () => {
-        alert('Menu');
+        props.navigation.dispatch(DrawerActions.toggleDrawer());
     };
 
     return (
@@ -19,3 +21,9 @@ export const HeaderMenu = props => {
         </TouchableOpacity>
     )
 };
+
+const mapStateToProps = state => ({
+    navigation: state.nav.navigation
+});
+
+export const HeaderMenu = connect(mapStateToProps)(HeaderMenuComponent);

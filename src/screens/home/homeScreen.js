@@ -1,11 +1,10 @@
 import React from 'react';
-import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { AllTracksScreen } from '../allTracks/allTracks';
 import { TrackScreen } from '../trackScreen/trackScreen';
 import { Logo, HeaderMenu } from '../../components/headerItems';
 
-const AppNavigator = createStackNavigator({
+export const AppNavigator = createStackNavigator({
     AllTracks: {
         screen: AllTracksScreen,
 
@@ -23,8 +22,6 @@ const AppNavigator = createStackNavigator({
             headerStyle: {
                 backgroundColor: '#3f51b5',
             },
-            headerTintColor:  'white',
+            headerTintColor: 'white',
         }
     });
-
-export const HomeScreen = createAppContainer(AppNavigator);

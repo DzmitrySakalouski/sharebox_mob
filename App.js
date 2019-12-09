@@ -5,7 +5,8 @@ import {
   View,
   StatusBar,
 } from 'react-native';
-import { LoginScreen, HomeScreen } from './src/screens';
+import { LoginScreen } from './src/screens';
+import MainScreen from './src/screens/home/drawerScreen';
 import { Provider } from 'react-redux';
 import { store } from './src/store';
 import firebase from 'react-native-firebase';
@@ -22,7 +23,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <StatusBar barStyle="default" backgroundColor="#3f51b5" />
-      { user ? <HomeScreen /> : <LoginScreen /> }
+      { user ? <MainScreen /> : <LoginScreen /> }
     </Provider>
   );
 };

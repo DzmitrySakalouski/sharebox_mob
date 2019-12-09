@@ -30,7 +30,7 @@ export const TrackCardComponent = props => {
     const { name, createdAt, updatedAt, id, creator, demos, gtp, comments } = props.track;
 
     const getDateString = dateItem => {
-        const date = new Date(dateItem._seconds);
+        const date = new Date(dateItem);
 
         return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()} / ${date.getHours()}:${date.getMinutes()}`;
     }
