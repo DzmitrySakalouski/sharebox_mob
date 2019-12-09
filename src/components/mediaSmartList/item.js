@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, PermissionsAndroid } from 'react-native';
+import { View, Text, StyleSheet, PermissionsAndroid, Platform, ActivityIndicator } from 'react-native';
 import { Button, Divider } from 'react-native-elements';
 import firebase from 'react-native-firebase';
-import RNFetchBlob from 'react-native-fetch-blob';
+import RNFS from 'react-native-fs';
 
 const styles = StyleSheet.create({
     container: {
@@ -22,15 +22,17 @@ const styles = StyleSheet.create({
     }
 });
 
-export const MediaItem = props => { // todo
+export const MediaItem = props => {
     const { name, ref } = props.item;
+    const [isDownloading, setDownloading] = useState(false);
 
     const handleDownloadFile = () => {
+        setDownloading(true);
         const storage = firebase.storage().refFromURL('gs://mob-dby.appspot.com');
         storage.child(ref).getDownloadURL().then(url => {
             const uStr = storage.child(ref).path.split('/');
             
-            PermissionsAndroid.requestMultiple([
+            Platform.OS === 'android' && PermissionsAndroid.requestMultiple([
                 PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
                 PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
             ], {
@@ -39,30 +41,39 @@ export const MediaItem = props => { // todo
             }).then(permRes => {
                 if (permRes['android.permission.READ_EXTERNAL_STORAGE'] === PermissionsAndroid.RESULTS.GRANTED &&
                     permRes['android.permission.WRITE_EXTERNAL_STORAGE'] === PermissionsAndroid.RESULTS.GRANTED) {
-                        RNFetchBlob
-                            .config({
-                                fileCache : true,
-                                addAndroidDownloads: {
-                                    useDownloadManager: true,
-                                    path : RNFetchBlob.fs.dirs.DownloadDir + '/' + uStr[uStr.length - 1],
-                                    notification: true
-                                }
-                            })
-                            .fetch('GET', url, {})
-                            .then((res) => {
-                                console.log('The file saved to ', res.path())
-                            });
+                        RNFS.downloadFile({
+                            fromUrl: url,
+                            toFile: `${RNFS.ExternalStorageDirectoryPath}/ ${uStr[uStr.length - 1]}`,
+                        }).promise.then((r) => {
+                            
+                        }).finally(() => setDownloading(false));
                 }
-            })
+            });
+
+            Platform.OS === 'ios' && RNFS.downloadFile({
+                    fromUrl: url,
+                    toFile: `${RNFS.DocumentDirectoryPath}/ ${uStr[uStr.length - 1]}`,
+                }).promise.then((r) => {
+                    console.log(r);
+                }).finally(() => setDownloading(false));
         }).catch(err => console.log(err));
     };
 
+    const renderPreloader = () => (
+        <View style={{ flex: 0, height: 100, justifyContent: "center", alignItems: 'center'}}>
+            <ActivityIndicator color="#3f51b5" />
+        </View>
+    );
+
     return (
         <>
-            <View style={styles.container}>
-                <Text style={styles.text}>{name}</Text>
-                <Button buttonStyle={styles.btn} title="Скачать" onPress={handleDownloadFile} />
-            </View>
+            {
+                isDownloading ? renderPreloader() : 
+                <View style={styles.container}>
+                    <Text style={styles.text}>{name}</Text>
+                    <Button buttonStyle={styles.btn} title="Скачать" onPress={handleDownloadFile} />
+                </View>
+            }
             <Divider />
         </>
     );
