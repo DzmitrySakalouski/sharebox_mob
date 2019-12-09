@@ -13,6 +13,15 @@ import moment from 'moment'
 const styles = StyleSheet.create({
     formItem: {
         marginTop: 20,
+    },
+    btnGroup: {
+        flex: 0,
+        flexDirection: 'row',
+        padding: 7,
+        justifyContent: 'space-around'
+    },
+    btnContainer: {
+        width: '40%'
     }
 });
 
@@ -49,13 +58,20 @@ class NewTrackComponent extends React.PureComponent {
 
     render() {
         return (
-            <View>
-                <HeaderDrawer onGoBack={this.onGoBack} />
-                <Input placeholder="Введите название" containerStyle={styles.formItem} value={this.state.name} onChangeText={text => this.setState({ name: text})} />
+            <View style={{ flex: 1, justifyContent: 'space-between' }}>
                 <View>
-                    <Button disabled={!this.state.name} onPress={this.onSaveNewTrack} title="Сохранить"/>
-                    <Button onPress={this.onGoBack} title="Отмена"/>
-                    { this.state.isLoading && <ActivityIndicator /> }
+                    <HeaderDrawer onGoBack={this.onGoBack} />
+                    <Input placeholder="Введите название" containerStyle={styles.formItem} value={this.state.name} onChangeText={text => this.setState({ name: text})} />
+                </View>
+                
+                <View style={styles.btnGroup}>
+                    <Button buttonStyle={{ backgroundColor: '#3f51b5' }} containerStyle={styles.btnContainer} disabled={!this.state.name} onPress={this.onSaveNewTrack} title="Сохранить"/>
+                    <Button buttonStyle={{ backgroundColor: '#FF0000' }} containerStyle={styles.btnContainer} onPress={this.onGoBack} title="Отмена"/>
+                    { this.state.isLoading && 
+                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                            <ActivityIndicator /> 
+                        </View>
+                    }
                 </View>
             </View>
         )
