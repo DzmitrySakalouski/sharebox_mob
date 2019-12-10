@@ -3,6 +3,7 @@ import { View, StyleSheet, Picker, Platform } from 'react-native';
 import { Text, Icon, Button } from 'react-native-elements';
 import FilePickerManager from 'react-native-file-picker';
 import DocumentPicker from 'react-native-document-picker';
+import firebase from 'react-native-firebase';
 
 const styles = StyleSheet.create({
     optionsBtn: {
@@ -18,6 +19,7 @@ const styles = StyleSheet.create({
 export const AddMediaForm = props => {
     const [selectedType, setSelectedType] = useState('');
     const [file, setFile] = useState(null);
+    const storage = firebase.storage();
 
     const pickAndroid = () => {
         FilePickerManager.showFilePicker(null, (response) => {
@@ -30,7 +32,16 @@ export const AddMediaForm = props => {
                 console.log('FilePickerManager Error: ', response.error);
             }
             else {
-                setFile(response);
+                const fileMap = {
+                    uri: response.uri.toString(),
+                    size: response.size,
+                    name: response.fileName,
+                    webkitRelativePath: "",
+                    lastModifiedDate: new Date(),
+                    lastModified: 1573557571788,
+                    type: response.type
+                }
+                setFile(fileMap);
             }
         });
     }
@@ -54,7 +65,9 @@ export const AddMediaForm = props => {
     }
 
     const handleUpload = () => {
-
+        const ref = storage.ref();
+        const dataRef = ref.child(`media/${file.name}`);
+        dataRef.put(file.uri.toString()).then(() => alert('SUCCESS')).catch(err => alert('ERROR'))
     }
 
     return (
@@ -72,9 +85,9 @@ export const AddMediaForm = props => {
             {
                 file && 
                 <View>
-                    <Text>File name: {file.fileName}</Text>
+                    <Text>File name: {file.name}</Text>
                     <Text>File size: {file.size}</Text>
-                    <Button onPress={handleUpload} buttonStyle={styles.optionsBtn} title="Загрузить" />
+                    <Button disabled={!file} onPress={handleUpload} buttonStyle={styles.optionsBtn} title="Загрузить" />
                 </View>
             }
         </View>
