@@ -8,7 +8,7 @@ import firebase from 'react-native-firebase';
 import Axios from 'axios';
 import { BASE_URL } from '../../common';
 import { getAllTracks } from '../../store/actions';
-import moment from 'moment'
+import moment from 'moment';
 
 const styles = StyleSheet.create({
     formItem: {

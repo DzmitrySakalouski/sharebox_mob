@@ -1,12 +1,11 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { ButtonGroup, Icon } from 'react-native-elements';
 import { MediaList } from '../../components/mediaSmartList';
-import { TouchableOpacity, TouchableHighlight } from 'react-native-gesture-handler';
 
 const styles = StyleSheet.create({
-    
+
     btnColor: {
         color: 'black',
     },
@@ -18,6 +17,11 @@ const styles = StyleSheet.create({
     },
     icon: {
         padding: 10
+    },
+    iconContainer: {
+        flex: 0,
+        flexDirection: 'row',
+        justifyContent: 'space-around'
     }
 });
 
@@ -35,17 +39,12 @@ export class TrackScreenComponent extends React.PureComponent {
     }
 
     goToAddMediaForm = () => {
-
+        this.props.navigation.navigate("AddMedia")
     }
 
     static navigationOptions = ({ navigation }) => {
         return {
             title: navigation.getParam('trackName', 'Track'),
-            headerRight: () => (
-                <TouchableHighlight onPress={this.goToAddMediaForm}>
-                    <Icon color="white" size={29} containerStyle={styles.icon} name="note-add"/>
-                </TouchableHighlight>
-            )
         };
     };
 
@@ -74,7 +73,6 @@ export class TrackScreenComponent extends React.PureComponent {
         return (
             <View style={styles.container}>
                 <ButtonGroup
-                    // buttonStyle={styles.btn}
                     textStyle={styles.btnColor}
                     onPress={this.updateIndex}
                     selectedIndex={selectedIndex}
@@ -82,8 +80,15 @@ export class TrackScreenComponent extends React.PureComponent {
                     selectedButtonStyle={styles.selectedBtn}
                     containerStyle={{ height: 50 }}
                 />
+                <TouchableOpacity>
+                    <View style={styles.iconContainer}>
+                        <Icon onPress={this.goToAddMediaForm} color="#3f51b5" size={40} containerStyle={styles.icon} name="note-add" />
+                        <Icon onPress={this.goToAddMediaForm} color="#3f51b5" size={40} containerStyle={styles.icon} name="message" />
+                    </View>
+
+                </TouchableOpacity>
                 <ScrollView>
-                    <MediaList items={this.state.items}/>
+                    <MediaList items={this.state.items} />
                 </ScrollView>
             </View>
         );

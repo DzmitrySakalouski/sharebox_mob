@@ -3,6 +3,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { AllTracksScreen } from '../allTracks/allTracks';
 import { TrackScreen } from '../trackScreen/trackScreen';
 import { Logo, HeaderMenu } from '../../components/headerItems';
+import { AddMediaForm } from '../addMediaForm/AddMediaForm';
 
 export const AppNavigator = createStackNavigator({
     AllTracks: {
@@ -11,6 +12,9 @@ export const AppNavigator = createStackNavigator({
     },
     Track: {
         screen: TrackScreen,
+    },
+    AddMedia: {
+        screen: AddMediaForm,
     }
 },
     {
