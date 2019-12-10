@@ -47,11 +47,15 @@ const icons = {
 };
 
 export const SideMenuComponent = props => {
-    const { user, items } = props;
+    const { user, items, navigation } = props;
     console.log('=> ', props);
 
     const signOut = () => {
         firebase.auth().signOut().then(() => {});
+    }
+
+    const navigateTo = route => {
+        navigation.navigate(route)
     }
 
     const handleLogOut = () => {
@@ -84,7 +88,7 @@ export const SideMenuComponent = props => {
             <View style={styles.nav}>
                 {
                     items.map(item => (
-                        <TouchableOpacity key={item.key}>
+                        <TouchableOpacity key={item.key} onPress={() => navigateTo(item.routeName)}>
                             <View style={styles.navItem}>
                                 <Icon size={30} name={icons[item.key]} color="#3f51b5" />
                                 <Text style={styles.navTitle}>{item.routeName}</Text>
