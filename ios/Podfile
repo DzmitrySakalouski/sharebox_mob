@@ -57,6 +57,7 @@ target 'swbox' do
 
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
   pod 'RNFS', :path => '../node_modules/react-native-fs'
+  pod 'react-native-document-picker', :path => '../node_modules/react-native-document-picker'
 
   target 'swboxTests' do
     inherit! :search_paths
