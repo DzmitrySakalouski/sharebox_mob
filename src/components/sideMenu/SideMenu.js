@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { Text, Avatar, Divider, Icon, Button } from 'react-native-elements';
 import { connect } from 'react-redux';
+import firebase from 'react-native-firebase';
 
 const styles = StyleSheet.create({
     container: {
@@ -47,7 +48,26 @@ const icons = {
 
 export const SideMenuComponent = props => {
     const { user, items } = props;
-    
+    console.log('=> ', props);
+
+    const signOut = () => {
+        firebase.auth().signOut().then(() => {});
+    }
+
+    const handleLogOut = () => {
+        Alert.alert('Уверены что хотите выйти?', 'Выход', [
+            {
+                text: 'Отмена',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel',
+            },
+            {
+                text: 'Выйти',
+                onPress: () => signOut(),
+            },
+        ], {cancelable: true},);
+    }
+
     return (
         user && user.name && user.photoUrl && <View style={styles.container}>
             <View style={styles.userContainer}>
@@ -73,7 +93,7 @@ export const SideMenuComponent = props => {
                     ))
                 }
             </View>
-            <Button raised buttonStyle={styles.logOutBtn} title="Выйти"/>
+            <Button onPress={handleLogOut} raised buttonStyle={styles.logOutBtn} title="Выйти"/>
         </View>
     );
 };
