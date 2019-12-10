@@ -4,7 +4,8 @@ export const LOG_OUT ="LOG_OUT";
 export function setUser(user) {
     const payload = {
         name: user.displayName,
-        email: user.email
+        email: user.email,
+        photoUrl: user.photoURL
     };
 
     return {
